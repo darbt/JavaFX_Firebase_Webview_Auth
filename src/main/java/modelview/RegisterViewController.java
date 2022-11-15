@@ -56,6 +56,7 @@ public class RegisterViewController implements Initializable {
           App.setRoot("LogInView.fxml");
     }
     
+    
     public void sendVerificationEmail() {
         try {
             UserRecord user = App.fauth.getUser("name");
@@ -67,16 +68,15 @@ public class RegisterViewController implements Initializable {
     
     public boolean registerUser() {
          UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(nameField.getText())
+                .setEmail(emailField.getText())
                 .setEmailVerified(false)
-                .setPassword("secretPassword")
+                .setPassword(passwordField.getText())
                 .setPhoneNumber(phoneNumberField.getText())
                 .setDisplayName(nameField.getText())
                 .setDisabled(false);
 
-        UserRecord userRecord;
         try {
-            userRecord = App.fauth.createUser(request);
+           UserRecord userRecord = App.fauth.createUser(request);
             System.out.println("Successfully created new user: " + userRecord.getUid());
             return true;
 
@@ -86,7 +86,7 @@ public class RegisterViewController implements Initializable {
         }
         
     }
-    public void returnLoginIn(){
+    public void returnToLoginIn(){
         try {
             App.setRoot("LogInView.fxml");
         } catch (IOException ex) {
