@@ -9,6 +9,8 @@ import com.mycompany.mvvmexample.App;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -51,7 +53,7 @@ public class RegisterViewController implements Initializable {
 
     @FXML
     private void switchToLogin(ActionEvent event) throws IOException {
-          App.setRoot("LogInViewController.fxml");
+          App.setRoot("LogInView.fxml");
     }
     
     public void sendVerificationEmail() {
@@ -65,11 +67,11 @@ public class RegisterViewController implements Initializable {
     
     public boolean registerUser() {
          UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(nameField.getText().trim()+"@example.com")
+                .setEmail(nameField.getText())
                 .setEmailVerified(false)
                 .setPassword("secretPassword")
-                .setPhoneNumber(phoneNumberField.getText().trim())
-                .setDisplayName(nameField.getText().trim())
+                .setPhoneNumber(phoneNumberField.getText())
+                .setDisplayName(nameField.getText())
                 .setDisabled(false);
 
         UserRecord userRecord;
@@ -83,6 +85,13 @@ public class RegisterViewController implements Initializable {
             return false;
         }
         
+    }
+    public void returnLoginIn(){
+        try {
+            App.setRoot("LogInView.fxml");
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
