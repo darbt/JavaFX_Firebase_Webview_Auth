@@ -53,6 +53,12 @@ public class AccessFBView {
     private Button regButton;
     
     @FXML
+    private Button logInButton;
+    
+    @FXML
+    private Button signUpButton;
+    
+    @FXML
     private TextArea outputField;
      private boolean key;
     private ObservableList<Person> listOfUsers = FXCollections.observableArrayList();

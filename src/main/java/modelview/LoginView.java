@@ -10,7 +10,9 @@ import com.mycompany.mvvmexample.App;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 /**
@@ -24,6 +26,12 @@ public class LoginView {
     private TextField emailField;
     @FXML
     private TextField passwordField;
+    
+    @FXML
+    private Button logInButton;
+    
+    @FXML
+    private Button regButton;
 
     @FXML
     private void switchToSecondary() throws IOException {
@@ -31,11 +39,15 @@ public class LoginView {
     }
 
     @FXML
-    private void LoginUser() throws IOException {
-
+    private void LoginUser(ActionEvent event) throws IOException {
         LogIn();
 
     }
+    @FXML
+    private void switchToRegister() throws IOException {
+        App.setRoot("RegisterView.fxml");
+    }
+
     
     public void LogIn()
     {

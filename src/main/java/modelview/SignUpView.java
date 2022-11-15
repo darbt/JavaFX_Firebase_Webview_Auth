@@ -37,6 +37,11 @@ public class SignUpView {
         registerUser();
     }
     
+    @FXML
+    private void switchToLogin() throws IOException {
+        App.setRoot("LogInView.fxml");
+    }
+    
       public void sendVerificationEmail() {
         try {
             UserRecord user = App.fauth.getUser("name");
