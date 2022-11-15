@@ -95,7 +95,7 @@ public class AccessFBView {
         //asynchronously write data
         ApiFuture<WriteResult> result = docRef.set(data);
     }
-    
+    //////////////////////////////////////////////////////////////////////////////
         public boolean readFirebase()
          {
              key = false;
