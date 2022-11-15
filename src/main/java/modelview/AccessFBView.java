@@ -30,12 +30,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import models.Person;
 
-public class AccessFBView {
+public class AccessFBView implements Initializable {
 
  
      @FXML
@@ -67,7 +69,8 @@ public class AccessFBView {
         return listOfUsers;
     }
 
-    void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 
         AccessDataViewModel accessDataViewModel = new AccessDataViewModel();
         nameField.textProperty().bindBidirectional(accessDataViewModel.userNameProperty());
@@ -93,6 +96,17 @@ public class AccessFBView {
      @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("WebContainer.fxml");
+    }
+    
+    @FXML
+    private void switchToRegister() throws IOException {
+        App.setRoot("RegisterView.fxml");
+    }
+    
+     
+    @FXML
+    private void switchToLogin() throws IOException {
+        App.setRoot("LogInView.fxml");
     }
     
     public void addData() {

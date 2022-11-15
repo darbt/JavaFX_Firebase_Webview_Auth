@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package modelview;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -13,40 +13,48 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import viewmodel.AccessDataViewModel;
+
 /**
+ * FXML Controller class
  *
  * @author trintydarbouze
  */
-public class SignUpView implements Initializable{
-    
-     @FXML
+public class RegisterViewController implements Initializable {
+
+    @FXML
     private TextField nameField;
     @FXML
     private TextField emailField;
     @FXML
+    private TextField passwordField;
+    @FXML
     private TextField phoneNumberField;
     @FXML
-    private TextField passwordField;
+    private Button signUpButton;
+    @FXML
+    private Button logInButton;
 
-   @Override
+    /**
+     * Initializes the controller class.
+     */
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
 
-        AccessDataViewModel accessDataViewModel = new AccessDataViewModel();
-        nameField.textProperty().bindBidirectional(accessDataViewModel.userNameProperty());
-    }
-    
-     @FXML
+    @FXML
     private void regRecord(ActionEvent event) {
-        registerUser();
+         registerUser();
+    }
+
+    @FXML
+    private void switchToLogin(ActionEvent event) throws IOException {
+          App.setRoot("LogInViewController.fxml");
     }
     
-    
-    private void switchToLogin() throws IOException {
-        App.setRoot("LogInView.fxml");
-    }
-    
-      public void sendVerificationEmail() {
+    public void sendVerificationEmail() {
         try {
             UserRecord user = App.fauth.getUser("name");
             //String url = user.getPassword();
@@ -55,8 +63,7 @@ public class SignUpView implements Initializable{
         }
     }
     
-    
-          public boolean registerUser() {
+    public boolean registerUser() {
          UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(nameField.getText().trim()+"@example.com")
                 .setEmailVerified(false)
@@ -77,4 +84,5 @@ public class SignUpView implements Initializable{
         }
         
     }
+    
 }

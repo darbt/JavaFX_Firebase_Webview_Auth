@@ -1,54 +1,58 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package modelview;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.mycompany.mvvmexample.App;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 /**
+ * FXML Controller class
  *
  * @author trintydarbouze
  */
+public class LogInViewController implements Initializable {
 
-public class LoginView {
-    
     @FXML
     private TextField emailField;
     @FXML
     private TextField passwordField;
-    
     @FXML
     private Button logInButton;
-    
     @FXML
     private Button regButton;
 
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("AccessFBView.fxml");
+    private void LoginUser(ActionEvent event) {
+         LogIn();
     }
 
     @FXML
-    private void LoginUser(ActionEvent event) throws IOException {
-        LogIn();
-
+    private void switchToRegister(ActionEvent event) throws IOException {
+    App.setRoot("RegisterView.fxml");
     }
-    @FXML
-    private void switchToRegister() throws IOException {
-        App.setRoot("RegisterView.fxml");
-    }
-
-    
+   
     public void LogIn()
     {
         try
@@ -57,12 +61,9 @@ public class LoginView {
             System.out.println("Fetched user data: "+ userRecord.getEmail());
             
         }catch (FirebaseAuthException ex) {
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogInViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
-
-
+    
 }
-
-
