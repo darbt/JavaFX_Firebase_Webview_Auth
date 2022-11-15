@@ -44,7 +44,7 @@ public class LogInViewController implements Initializable {
     }    
 
     @FXML
-    private void LoginUser(ActionEvent event) {
+    private void LoginUser(ActionEvent event) throws IOException {
          LogIn();
     }
 
@@ -53,16 +53,22 @@ public class LogInViewController implements Initializable {
     App.setRoot("RegisterView.fxml");
     }
    
-    public void LogIn()
+    public void LogIn() throws IOException
     {
         try
         {
             UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(emailField.getText().trim());
             System.out.println("Fetched user data: "+ userRecord.getEmail());
-            
-        }catch (FirebaseAuthException ex) {
-            Logger.getLogger(LogInViewController.class.getName()).log(Level.SEVERE, null, ex);
+            App.setRoot("AccessFBView.fxml");
+        } catch (FirebaseAuthException ex) {
+            System.err.println("Wrong or empty username");
+        }catch (IllegalArgumentException iae){
+            System.err.println("Wrong or empty username");
         }
+            
+//        }catch (FirebaseAuthException ex) {
+//            Logger.getLogger(LogInViewController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
     }
     
