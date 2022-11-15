@@ -11,6 +11,7 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.mycompany.mvvmexample.FirestoreContext;
 import com.mycompany.mvvmexample.FirestoreContext;
 import com.mycompany.mvvmexample.FirestoreContext;
@@ -47,6 +48,10 @@ public class AccessFBView {
     private Button writeButton;
     @FXML
     private Button readButton;
+    
+    @FXML
+    private Button regButton;
+    
     @FXML
     private TextArea outputField;
      private boolean key;
@@ -69,12 +74,12 @@ public class AccessFBView {
         addData();
     }
 
-        @FXML
+    @FXML
     private void readRecord(ActionEvent event) {
         readFirebase();
     }
     
-            @FXML
+    @FXML
     private void regRecord(ActionEvent event) {
         registerUser();
     }
@@ -95,7 +100,7 @@ public class AccessFBView {
         //asynchronously write data
         ApiFuture<WriteResult> result = docRef.set(data);
     }
-    //////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////
         public boolean readFirebase()
          {
              key = false;
@@ -145,13 +150,22 @@ public class AccessFBView {
         }
     }
 
-    public boolean registerUser() {
-        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(nameField.getText().trim()+"@example.com")
+//    public boolean registerUser() {
+//         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+//                .setEmail(nameField.getText().trim()+"@example.com")
+//                .setEmailVerified(false)
+//                .setPassword("secretPassword")
+//                .setPhoneNumber(ageField.getText())
+//                .setDisplayName(nameField.getText().trim())
+//                .setDisabled(false);
+        
+         public boolean registerUser() {
+         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail("user3@example.com")
                 .setEmailVerified(false)
                 .setPassword("secretPassword")
-                .setPhoneNumber(ageField.getText())
-                .setDisplayName(nameField.getText().trim())
+                .setPhoneNumber("+11329879384")
+                .setDisplayName("James Doe")
                 .setDisabled(false);
 
         UserRecord userRecord;
