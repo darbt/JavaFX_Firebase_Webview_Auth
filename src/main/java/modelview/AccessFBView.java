@@ -29,12 +29,17 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import models.Person;
 
 public class AccessFBView implements Initializable {
@@ -62,7 +67,18 @@ public class AccessFBView implements Initializable {
     
     @FXML
     private TextArea outputField;
-     private boolean key;
+     @FXML
+    private TableView <Person> tableField = new TableView();
+    
+    
+    @FXML
+    private TableColumn<Person, String> nameCol;
+
+    @FXML
+    private TableColumn<Person, String> majorCol;
+    @FXML
+    private TableColumn<Person, Integer> ageCol;
+    private boolean key;
     private ObservableList<Person> listOfUsers = FXCollections.observableArrayList();
     private Person person;
     public ObservableList<Person> getListOfUsers() {
@@ -76,22 +92,49 @@ public class AccessFBView implements Initializable {
         nameField.textProperty().bindBidirectional(accessDataViewModel.userNameProperty());
         majorField.textProperty().bindBidirectional(accessDataViewModel.userMajorProperty());
         writeButton.disableProperty().bind(accessDataViewModel.isWritePossibleProperty().not());
+        
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        majorCol.setCellValueFactory(new PropertyValueFactory<>("Major"));
+        ageCol.setCellValueFactory(new PropertyValueFactory<>("Age"));
+    
+        tableField.setOnMousePressed(new EventHandler<MouseEvent>()
+                {
+                    @Override
+                    public void handle(MouseEvent event)
+                    {
+                       
+                        nameField.setText(tableField.getSelectionModel().getSelectedItem().getName());
+                        majorField.setText(tableField.getSelectionModel().getSelectedItem().getMajor());
+                        ageField.setText(Integer.toString(tableField.getSelectionModel().getSelectedItem().getAge()));
+                        //currentID = outputTable.getSelectionModel().getSelectedItem().getId();
+                    }
+                });
+        
     }
-
-    @FXML
+    
+ @FXML
     private void addRecord(ActionEvent event) {
         addData();
+       nameField.clear();
+       majorField.clear();
+       ageField.clear();
+       readRecord(event);
     }
 
     @FXML
     private void readRecord(ActionEvent event) {
+        outputField.clear();
+        tableField.getItems().clear();
         readFirebase();
     }
+    
+    
     
     @FXML
     private void regRecord(ActionEvent event) {
         registerUser();
     }
+    
     
      @FXML
     private void switchToSecondary() throws IOException {
@@ -121,7 +164,7 @@ public class AccessFBView implements Initializable {
         ApiFuture<WriteResult> result = docRef.set(data);
     }
     ///////////////////////////////////////////////////////////////////////////////////////
-        public boolean readFirebase()
+       public boolean readFirebase()
          {
              key = false;
 
@@ -129,6 +172,7 @@ public class AccessFBView implements Initializable {
         ApiFuture<QuerySnapshot> future =  App.fstore.collection("References").get();
         // future.get() blocks on response
         List<QueryDocumentSnapshot> documents;
+        
         try 
         {
             documents = future.get().getDocuments();
@@ -137,14 +181,24 @@ public class AccessFBView implements Initializable {
                 System.out.println("Outing....");
                 for (QueryDocumentSnapshot document : documents) 
                 {
-                    outputField.setText(outputField.getText()+ document.getData().get("Name")+ " , Major: "+
+                     person  = new Person(
+                            String.valueOf(document.getData().get("Name")), 
+                            document.getData().get("Major").toString(),
+                            Integer.parseInt(document.getData().get("Age").toString())
+                    );
+       
+                    listOfUsers.add(person);
+        
+                    
+                    outputField.setText(
+                            outputField.getText()+ 
+                            document.getData().get("Name")+ " , Major: "+
                             document.getData().get("Major")+ " , Age: "+
                             document.getData().get("Age")+ " \n ");
                     System.out.println(document.getId() + " => " + document.getData().get("Name"));
-                    person  = new Person(String.valueOf(document.getData().get("Name")), 
-                            document.getData().get("Major").toString(),
-                            Integer.parseInt(document.getData().get("Age").toString()));
-                    listOfUsers.add(person);
+                    
+                          
+                    tableField.setItems(listOfUsers); 
                 }
             }
             else
@@ -160,6 +214,7 @@ public class AccessFBView implements Initializable {
         }
         return key;
     }
+        
         
         public void sendVerificationEmail() {
         try {
@@ -200,4 +255,6 @@ public class AccessFBView implements Initializable {
         }
         
     }
+         
 }
+

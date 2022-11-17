@@ -2,13 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="467.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.AccessFBView">
+<AnchorPane prefHeight="479.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelview.AccessFBView">
    <children>
       <VBox alignment="CENTER_RIGHT" layoutX="7.0" prefHeight="166.0" prefWidth="485.0" spacing="10.0">
          <children>
@@ -46,6 +48,13 @@
          </padding>
       </VBox>
       <TextArea fx:id="outputField" layoutX="6.0" layoutY="157.0" prefHeight="304.0" prefWidth="485.0" />
+      <TableView fx:id="tableField" layoutX="10.0" layoutY="477.0" minHeight="300.0" prefHeight="400.0" prefWidth="508.0">
+               <columns>
+                  <TableColumn fx:id="nameCol" prefWidth="100.0" text="Name" />
+                  <TableColumn fx:id="majorCol" prefWidth="100.0" text="Major" />
+                  <TableColumn fx:id="ageCol" prefWidth="100.0" text="Age" />
+               </columns>
+            </TableView>
    </children>
    <opaqueInsets>
       <Insets />
